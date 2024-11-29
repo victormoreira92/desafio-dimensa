@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Nome de Tabela: ArquivosDadosFilmes
+# Descrição: Modelo para anexar o arquivo CSV com infromações de Filme.
 #
 #  id                      :integer          not null, primary key
 #  nome_arquivo            :string

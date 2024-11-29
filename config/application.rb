@@ -35,5 +35,8 @@ module MoviesInformationApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.time_zone = 'America/Sao_Paulo'
+    config.i18n.default_locale = 'pt-BR'
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_30_133214) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_01_203846) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_30_133214) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "casts", force: :cascade do |t|
+    t.string "cast_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "conteudos", force: :cascade do |t|
     t.string "title", null: false
     t.integer "type_conteudo"
@@ -57,6 +63,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_30_133214) do
     t.text "description", null: false
     t.integer "duration"
     t.integer "type_duration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "country_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string "genre_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

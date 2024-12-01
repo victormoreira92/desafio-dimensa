@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_29_001532) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_30_133214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,6 +44,35 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_29_001532) do
 
   create_table "arquivos_dados_filmes", force: :cascade do |t|
     t.string "nome_arquivo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "conteudos", force: :cascade do |t|
+    t.string "title", null: false
+    t.integer "type_conteudo"
+    t.string "show_id"
+    t.datetime "published_at", null: false
+    t.integer "year", null: false
+    t.text "description", null: false
+    t.integer "duration"
+    t.integer "type_duration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "productions", force: :cascade do |t|
+    t.string "title"
+    t.integer "type_production"
+    t.string "director"
+    t.string "cast"
+    t.string "country"
+    t.datetime "published_at"
+    t.text "description"
+    t.string "year_production"
+    t.string "genre"
+    t.string "rating"
+    t.string "duration"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_01_203846) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_01_223256) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,21 +42,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_203846) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "arquivos_dados_filmes", force: :cascade do |t|
-    t.string "nome_arquivo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "casts", force: :cascade do |t|
     t.string "cast_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "conteudos", force: :cascade do |t|
+  create_table "content_files", force: :cascade do |t|
+    t.string "content_file_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "contents", force: :cascade do |t|
     t.string "title", null: false
-    t.integer "type_conteudo"
+    t.integer "type_content"
     t.string "show_id"
     t.datetime "published_at", null: false
     t.integer "year", null: false
@@ -75,22 +75,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_203846) do
 
   create_table "genres", force: :cascade do |t|
     t.string "genre_name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "productions", force: :cascade do |t|
-    t.string "title"
-    t.integer "type_production"
-    t.string "director"
-    t.string "cast"
-    t.string "country"
-    t.datetime "published_at"
-    t.text "description"
-    t.string "year_production"
-    t.string "genre"
-    t.string "rating"
-    t.string "duration"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

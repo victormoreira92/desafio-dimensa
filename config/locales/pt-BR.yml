@@ -2,24 +2,24 @@
 pt-BR:
   activerecord:
     attributes:
-      arquivo_dado_filme:
-        nome_arquivo: 'Nome de Arquivo'
-        arquivo: 'Arquivo de Dados de Filmes'
-      conteudo:
+      content_file:
+        content_file_name: 'Nome de Arquivo'
+        file_data: 'Arquivo de Dados'
+      content:
         title: 'Title'
         published_at: 'Published at'
         year: 'Year'
         description: 'Description'
     errors:
       models:
-        arquivo_dado_filme:
+        content_file:
           attributes:
-            arquivo:
-              tipo_arquivo_nao_permitido: 'O arquivo não está em formato CSV'
-        conteudo:
+            file_data:
+              tipo_arquivo_nao_permitido: 'não está em formato CSV'
+        content:
           attributes:
             base:
-              conteudo_com_duration_invalido: 'Tipo de duration é inválido'
+              content_com_duration_invalido: 'Tipo de duration é inválido'
       messages:
         record_invalid: 'A validação falhou: %{errors}'
         restrict_dependent_destroy:

@@ -5,12 +5,21 @@ pt-BR:
       arquivo_dado_filme:
         nome_arquivo: 'Nome de Arquivo'
         arquivo: 'Arquivo de Dados de Filmes'
+      conteudo:
+        title: 'Title'
+        published_at: 'Published at'
+        year: 'Year'
+        description: 'Description'
     errors:
       models:
         arquivo_dado_filme:
           attributes:
             arquivo:
               tipo_arquivo_nao_permitido: 'O arquivo não está em formato CSV'
+        conteudo:
+          attributes:
+            base:
+              conteudo_com_duration_invalido: 'Tipo de duration é inválido'
       messages:
         record_invalid: 'A validação falhou: %{errors}'
         restrict_dependent_destroy:

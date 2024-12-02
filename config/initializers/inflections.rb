@@ -10,5 +10,8 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.irregular 'arquivo_dado_filme', 'arquivos_dados_filmes'
+  inflect.irregular 'content_genre', 'contents_genres'
+  inflect.irregular 'content_country', 'contents_countries'
+  inflect.irregular 'content_cast', 'contents_casts'
+
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_01_223256) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_01_233627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,35 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_223256) do
     t.integer "type_duration"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "content_file_id", null: false
+    t.index ["content_file_id"], name: "index_contents_on_content_file_id"
+  end
+
+  create_table "contents_casts", force: :cascade do |t|
+    t.bigint "content_id", null: false
+    t.bigint "cast_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cast_id"], name: "index_contents_casts_on_cast_id"
+    t.index ["content_id"], name: "index_contents_casts_on_content_id"
+  end
+
+  create_table "contents_countries", force: :cascade do |t|
+    t.bigint "content_id", null: false
+    t.bigint "country_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["content_id"], name: "index_contents_countries_on_content_id"
+    t.index ["country_id"], name: "index_contents_countries_on_country_id"
+  end
+
+  create_table "contents_genres", force: :cascade do |t|
+    t.bigint "content_id", null: false
+    t.bigint "genre_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["content_id"], name: "index_contents_genres_on_content_id"
+    t.index ["genre_id"], name: "index_contents_genres_on_genre_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -81,4 +110,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_223256) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "contents", "content_files"
+  add_foreign_key "contents_casts", "casts"
+  add_foreign_key "contents_casts", "contents"
+  add_foreign_key "contents_countries", "contents"
+  add_foreign_key "contents_countries", "countries"
+  add_foreign_key "contents_genres", "contents"
+  add_foreign_key "contents_genres", "genres"
 end

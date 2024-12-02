@@ -5,7 +5,7 @@
 #           como Filme(Movie) e Serie(TV Show)
 #
 #  id                      :integer          not null, primary key
-#  arquivo_dado_filme_id   :integer          not null, foreign key
+#  content_file_id         :integer          not null, foreign key
 #  title                   :string           not null
 #  show_id                 :string
 #  published_at            :datetime         not null
@@ -21,6 +21,16 @@ class Content < ApplicationRecord
   enum type_content: { movie: 0, tv_show: 1 }
   enum type_duration: { minutes: 0, season: 1}
 
+  belongs_to :content_file
+
+  has_many :contents_casts
+  has_many :casts, through: :contents_casts
+
+  has_many :contents_genres
+  has_many :genres, through: :contents_genres
+
+  has_many :contents_countries
+  has_many :countries, through: :contents_countries
 
   validates :title, :published_at, :year, :description, presence: true
   validate :validar_type_content_e_type_duration

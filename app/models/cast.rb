@@ -10,5 +10,8 @@
 #  updated_at              :datetime         not null
 #
 class Cast < ApplicationRecord
+  has_many :contents_casts
+  has_many :content, through: :contents_casts
+
   validates :cast_name, presence: true
 end

@@ -11,6 +11,7 @@
 #
 class ContentFile < ApplicationRecord
   has_one_attached :file_data
+  has_many :contents
   validates :content_file_name, :file_data, presence: true
   validate :arquivo_com_formato_csv?
 

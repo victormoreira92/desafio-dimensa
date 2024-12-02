@@ -9,5 +9,8 @@
 #  updated_at              :datetime         not null
 #
 class Genre < ApplicationRecord
+  has_many :contents_genres
+  has_many :content, through: :contents_genres
+
   validates :genre_name, presence: true
 end

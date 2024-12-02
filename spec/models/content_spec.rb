@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Content, type: :model do
+
+  describe 'Associações' do
+    it { should have_many(:contents_casts) }
+    it { should have_many(:contents_genres) }
+    it { should have_many(:contents_countries) }
+  end
+
   describe 'Validações' do
     context 'quando o Content é válido' do
       it 'com todos os atributos' do

@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe ContentFile, type: :model do
+  describe 'Associações' do
+    it { should have_many(:contents) }
+    it { should have_one_attached (:file_data) }
+  end
+
   describe 'Validações' do
     context 'quando ContentFile é válido' do
       it 'com todos os atributos preenchidos' do

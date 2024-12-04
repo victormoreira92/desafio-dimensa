@@ -6,25 +6,22 @@ class CsvDatabaseTransactionService
   COLUNAS_ESPERADAS = %w[show_id type title director	cast
                          country	date_added	release_year rating	duration	listed_in	description].freeze
 
-  def initialize(content_file)
-    @content_file = content_file
+  def initialize(content_file_id)
+    @content_file = ContentFile.find(content_file_id)
     @errors = []
-    @message = {
-      genres: 0,
-      casts: 0,
-      countries: 0,
-      contents: 0
-    }
+    @message = { contents: nil }
   end
 
   def process
-    binding.pry
-    csv_file = CSV.open(@content_file.attachment_changes['file_data'].attachable[:io], headers: true).read
-    csv_file.each do |row|
-      criar_genres(row) if !row['listed_in'].blank?
-      criar_casts(row) if !row['cast'].blank?
-      criar_countries(row) if !row['country'].blank?
+    line_count = 0
+    CSV.parse(@content_file.file_data.download, headers: true) do |row|
+      p line_count += 1
       criar_contents(row) if !row['title'].blank?
+      associar_content_genres_casts_countries(row)
+
+      # criar_genres(row) if !row['listed_in'].blank?
+      # criar_casts(row) if !row['cast'].blank?
+      # criar_countries(row) if !row['country'].blank?
     end
     @message
   end
@@ -32,13 +29,12 @@ class CsvDatabaseTransactionService
   private
 
   def criar_contents(row)
-    if row['duration'] == 'min'
-      type_duration = :minutes
-    else
-      type_duration = row['duration'].split(' ')[1].downcase.to_sym
-    end
+    type_duration = row['duration'].split(' ')[1].downcase.to_sym
+    type_duration = :minutes if type_duration == :min
 
     type_content = row['type'].downcase.gsub(' ', '_').to_sym
+    created_count = 0
+
 
     Content.transaction do
       unless Content.find_by(show_id: row['show_id'])
@@ -49,55 +45,30 @@ class CsvDatabaseTransactionService
           description: row['description'],
           year: row['release_year'].to_i,
           duration: row['duration'].split(', ')[0],
-          type_duration: type_duration
+          published_at: DateTime.parse(row['date_added']),
+          type_duration: type_duration,
+          content_file: @content_file
         )
         created_count += 1
       end
-      @message[:content] += created_count
+      @message[:contents] += created_count
     end
   end
 
-  def criar_genres(row)
-    genres_names = row['listed_in'].split(', ').map(&:strip)
-    created_count = 0
+  def associar_content_genres_casts_countries(row)
+    filme = Content.find_by(show_id: row['show_id'])
+    modelos = {}
 
-    Genre.transaction do
-      genres_names.each do |genre_name|
-        unless Genre.find_by(genre_name: genre_name)
-          Genre.create(genre_name: genre_name)
-          created_count += 1
-        end
+    modelos[:genre] = row['listed_in'].split(', ').map(&:strip) unless row['listed_in'].blank?
+    modelos[:cast] = row['cast'].split(', ').map(&:strip) unless row['cast'].blank?
+    modelos[:country] = row['country'].split(', ').map(&:strip) unless row['country'].blank?
+
+    modelos.each_key do |modelo_name|
+      modelos[modelo_name].each do |name|
+        atributo = "#{modelo_name}_name"
+        model = modelo_name.to_s.titlecase.constantize.find_or_create_by(atributo.to_sym => name)
+        filme.send(modelo_name.to_s.pluralize) << model unless filme.send(modelo_name.to_s.pluralize).include?(model)
       end
     end
-    @message[:genres] += created_count
-  end
-
-  def criar_casts(row)
-    cast_names = row['cast'].split(', ').map(&:strip)
-    created_count = 0
-    Cast.transaction do
-      cast_names.each do |cast_name|
-        unless Cast.find_by(cast_name: cast_name)
-          Cast.create(cast_name: cast_name)
-          created_count += 1
-        end
-      end
-    end
-    @message[:casts] += created_count
-  end
-
-  def criar_countries(row)
-    country_name = row['country'].split(', ').map(&:strip)
-    created_count = 0
-
-    Country.transaction do
-      country_name.each do |country_name|
-        unless Country.find_by(country_name: country_name)
-          Country.create(country_name: country_name)
-          created_count += 1
-        end
-      end
-    end
-    @message[:countries] += created_count
   end
 end

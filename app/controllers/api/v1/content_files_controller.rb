@@ -3,13 +3,13 @@ module Api
     class ContentFilesController < ApplicationController
 
       def process_csv
-       content_file = ContentFile.new(content_file_params)
-       resp = ContentFilesController.new(content_file).call
+        resp = ContentFileProcessor.new(content_file_params).call
 
-       if resp[:error].nil?
-         render json: { status: :success, message: resp[:message] }, status: :ok
+       if resp[:errors].nil?
+         render json: { status: :success, message:
+         I18n.t('activerecord.success.models.content_files.process_csv', contents: resp[:message][:contents]) }, status: :ok
        else
-         render json: { status: :error, message: resp[:error] }, status: :unprocessable_entity
+         render json: { status: :error, message: resp[:errors] }, status: :unprocessable_entity
        end
       end
 

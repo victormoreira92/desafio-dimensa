@@ -30,7 +30,6 @@ RSpec.describe CsvDatabaseTransactionService, type: :service do
       it 'numeros de contents igual ao do arquivo CSV' do
         content_file = create(:content_file, :com_arquivo_teste)
         response = described_class.new(content_file.id).send(:process)
-        binding.pry
         expect(response[:contents]).to eq(4)
       end
     end
@@ -39,7 +38,6 @@ RSpec.describe CsvDatabaseTransactionService, type: :service do
       it 'numeros de contents igual ao do arquivo CSV' do
         content_file = create(:content_file, :com_arquivo_teste)
         response = described_class.new(content_file.id).send(:process)
-        binding.pry
         expect(response[:contents]).to eq(4)
       end
     end

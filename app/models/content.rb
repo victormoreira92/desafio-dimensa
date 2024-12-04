@@ -35,12 +35,20 @@ class Content < ApplicationRecord
   validates :title, :published_at, :year, :description, presence: true
   validate :validar_type_content_e_type_duration
 
+  scope :by_genre, ->(genre_name) { joins(:genres).where(genres: { genre_name: genre_name }) }
+  scope :by_country, ->(country_name) { joins(:countries).where(countries: { country_name: country_name }) }
+  scope :by_cast, ->(cast_name) { joins(:casts).where('casts.cast_name ILIKE ?', "%#{cast_name}%") }
+  scope :by_title, ->(title) { where('title ILIKE ?', "%#{title}%") }
+  scope :by_type_content, ->(type_content) { where(type_content: type_content.to_sym) }
+  scope :by_year_range, ->(started_at, ended_at) { where('year BETWEEN ? AND ?', started_at, ended_at) }
+  #scope :by_director, ->(type_content) { where(type_content: type_content.to_sym) }
+
   private
 
   def validar_type_content_e_type_duration
     content_duration = {
       movie: 'minutes',
-      tv_show: 'season'
+      tv_show: 'seasons'
     }.freeze
     errors.add(:base, :content_com_duration_invalido) unless content_duration[type_content.to_sym] == type_duration
   end

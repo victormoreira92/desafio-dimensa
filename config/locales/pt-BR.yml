@@ -10,6 +10,10 @@ pt-BR:
         published_at: 'Published at'
         year: 'Year'
         description: 'Description'
+    success:
+      models:
+        content_files:
+          process_csv: 'Arquivo CSV procesado com sucesso! Criados %{contents} registros de Content no banco de dados'
     errors:
       models:
         content_file:

@@ -9,7 +9,7 @@ module Api
       has_scope :by_title
 
       def index
-        @contents = apply_scopes(Content).all
+        @contents = apply_scopes(Content.order(year: :desc)).all
         render json: @contents
       end
     end

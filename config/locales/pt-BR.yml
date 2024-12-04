@@ -16,6 +16,9 @@ pt-BR:
           attributes:
             file_data:
               tipo_arquivo_nao_permitido: 'não está em formato CSV'
+            base:
+              csv_vazio: 'Arquivo de Dados vazio'
+              arquivo_com_headers_diferente: 'Arquivo de Dados faltando as colunas: %{colunas}'
         content:
           attributes:
             base:

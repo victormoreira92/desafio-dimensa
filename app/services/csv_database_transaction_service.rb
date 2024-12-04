@@ -3,19 +3,14 @@ require 'csv'
 class CsvDatabaseTransactionService
   attr_accessor :content_file, :errors, :message
 
-  COLUNAS_ESPERADAS = %w[show_id type title director	cast
-                         country	date_added	release_year rating	duration	listed_in	description].freeze
-
-  def initialize(content_file_id)
-    @content_file = ContentFile.find(content_file_id)
+  def initialize(content_file)
+    @content_file = content_file
     @errors = []
-    @message = { contents: nil }
+    @message = { contents: 0 }
   end
 
   def process
-    line_count = 0
     CSV.parse(@content_file.file_data.download, headers: true) do |row|
-      p line_count += 1
       criar_contents(row) if !row['title'].blank?
       associar_content_genres_casts_countries(row)
 
@@ -23,7 +18,7 @@ class CsvDatabaseTransactionService
       # criar_casts(row) if !row['cast'].blank?
       # criar_countries(row) if !row['country'].blank?
     end
-    @message
+    { errors: @errors, messages: @message }
   end
 
   private

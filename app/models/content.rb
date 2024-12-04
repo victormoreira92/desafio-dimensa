@@ -19,7 +19,7 @@
 #
 class Content < ApplicationRecord
   enum type_content: { movie: 0, tv_show: 1 }
-  enum type_duration: { minutes: 0, season: 1}
+  enum type_duration: { minutes: 0, seasons: 1}
 
   belongs_to :content_file
 

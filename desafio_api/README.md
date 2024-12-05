@@ -7,24 +7,52 @@ Aplciação em Rails para visualização de dados de filmes e séries.
  * Ruby Version: 3.0.2
  * Rails Version: 7.0.2
  * Database: Postgresql
-
  
 ## Como funciona
 
-## Requisições  
+Iniciar o siistema
+`rails db:create db:migrate`
 
-* System dependencies
+ `rails s`
 
-* Configuration
+## Endpoints
+ *`POST /api/v1/content_files/process_csv`
+  Ação para anexar arquivo csv para ser, validado e depois processado.
 
-* Database creation
+ *`GET /api/v1/content/process_csv`
+  Ação para mostrar todos os Contents cadastrados no banco de dados.
 
-* Database initialization
+  ### Filtros: 
 
-* How to run the test suite
+ *`GET /api/v1/content/process_csv?by_genre=genre_name`
+  Ação para mostrar todos os Contents cadastrados no banco de dados e filtralos por nome de genero
 
-* Services (job queues, cache servers, search engines, etc.)
+ *`GET /api/v1/content/process_csv?by_country=country_name`
+  Ação para mostrar todos os Contents cadastrados no banco de  dados e filtralos por nome de country
 
-* Deployment instructions
+ *`GET /api/v1/content/process_csv?by_title=title`
+  Ação para mostrar todos os Contents cadastrados no banco de  dados e filtralos por nome de title
+end
 
-* ...
+## Modelos Criados
+Content_File = Representa o arquivo csv anexado
+
+Content = Representa a obra cinematografica, podendo ser Movie ou Tv_show
+
+Genre = Representa os generos
+
+Cast = Representa os casts
+
+Country = Representa os países
+
+Contents_Genres = Representa a relação muitos para muitos de Content e Genre
+
+Contents_Countries = Representa a relação muitos para muitos de Content e Country
+
+Contents_Casts = Representa a relação muitos para muitos de Content e Cast
+
+## Testes 
+ Para executar 
+`bundle exec rspec -f d /spec/` 
+  Para executar específico
+ `bundle exec rspec -f d /spec/`

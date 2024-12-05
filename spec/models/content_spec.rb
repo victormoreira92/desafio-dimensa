@@ -24,16 +24,48 @@ RSpec.describe Content, type: :model do
         end
       end
       it 'content do tipo Movie com duration season' do
-        content = build(:content, type_duration: :season)
+        content = build(:content, type_duration: :seasons)
         content.valid?
         expect(content.errors[:base]).to include(I18n.t('activerecord.errors.models.content.attributes.base.content_com_duration_invalido'))
       end
 
       it 'content do tipo Tv Show com duration minutes' do
-        content = build(:content, :tv_show, type_duration: :minutes)
+        content = build(:content, :tv, type_duration: :minutes)
         content.valid?
         expect(content.errors[:base]).to include(I18n.t('activerecord.errors.models.content.attributes.base.content_com_duration_invalido'))
       end
+    end
+  end
+
+  describe 'scope' do
+    let!(:genre) { create(:genre) }
+    let!(:cast) { create(:cast) }
+    let!(:country) { create(:country) }
+    let!(:content) { create(:content) }
+    let!(:content_tv) { create(:content, :tv) }
+
+    it '#by_genre' do
+      content.genres << genre
+      expect(described_class.by_genre(genre.genre_name)).to include(content)
+    end
+
+    it '#by_cast' do
+      content.casts << cast
+      expect(described_class.by_cast(cast.cast_name)).to include(content)
+    end
+
+    it '#by_country' do
+      content.countries << country
+      expect(described_class.by_country(country.country_name)).to include(content)
+    end
+
+    it '#by_title' do
+      expect(described_class.by_title(content.title)).to include(content)
+    end
+
+    it '#by_genre' do
+      content.update(year: 2004)
+      expect(described_class.by_year_range(2001, 2004)).to include(content)
     end
   end
 end

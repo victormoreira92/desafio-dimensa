@@ -2,7 +2,7 @@ module Api
   module V1
     class ContentsController < ApplicationController
       has_scope :by_genre
-      has_scope :by_year_range
+      has_scope :by_year_range, using: %i[started_at ended_at], type: :hash
       has_scope :by_cast
       has_scope :by_country
       has_scope :by_type_content

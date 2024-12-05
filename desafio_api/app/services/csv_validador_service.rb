@@ -9,10 +9,10 @@ class CsvValidadorService
     @errors = []
   end
 
-  def valid?(content_file)
-    unless validar_modelo_content_file(content_file)
-      validar_csv_vazio(content_file)
-      validar_headers(content_file)
+  def valid?(params)
+    unless validar_modelo_content_file(params)
+      validar_csv_vazio(params)
+      validar_headers(params)
     end
 
     { errors: @errors.flatten }
@@ -20,20 +20,20 @@ class CsvValidadorService
 
   private
 
-  def validar_modelo_content_file(content_file_params)
-    arquivo_dados = ContentFile.new(content_file_params)
+  def validar_modelo_content_file(params)
+    arquivo_dados = ContentFile.new(params)
     unless arquivo_dados.valid?
       @errors.append(arquivo_dados.errors.full_messages.join(', '))
     end
   end
 
-  def validar_csv_vazio(content_file)
-    csv = CSV.read(content_file['file_data'].path, headers: true)
+  def validar_csv_vazio(params)
+    csv = CSV.read(params[:file_data].path, headers: true)
     @errors << I18n.t('activerecord.errors.models.content_file.attributes.base.csv_vazio') if csv.empty?
   end
 
-  def validar_headers(content_file)
-    headers_de_arquivo = CSV.open(content_file['file_data'].path, headers: true).read.headers
+  def validar_headers(params)
+    headers_de_arquivo = CSV.open(params[:file_data].path, headers: true).read.headers
     colunas_faltando = COLUNAS_ESPERADAS - headers_de_arquivo
     if colunas_faltando.any?
       @errors << I18n.t('activerecord.errors.models.content_file.attributes.base.arquivo_com_headers_diferente',

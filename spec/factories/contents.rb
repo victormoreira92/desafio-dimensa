@@ -7,8 +7,10 @@ FactoryBot.define do
     year { (2000..2023).to_a.sample }
     description { Faker::Lorem.paragraph(sentence_count: 4) }
     duration { (60..180).to_a.sample }
+    rating { :pg13 }
     type_duration { :minutes }
     association :content_file, :com_arquivo_csv
+    association :director, factory: :cast
   end
 
   trait :tv do

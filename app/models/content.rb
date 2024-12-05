@@ -11,17 +11,21 @@
 #  published_at            :datetime         not null
 #  year                    :integer          not null
 #  description             :text             not null
+#  rating                  :integer(enum)
+#  director                :references(Cast)
 #  duration                :integer
 #  type_duration           :integer(enum)
-#  type_content           :intger(enum)
+#  type_content            :intger(enum)
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #
 class Content < ApplicationRecord
   enum type_content: { movie: 0, tv_show: 1 }
-  enum type_duration: { minutes: 0, seasons: 1}
+  enum type_duration: { minutes: 0, seasons: 1 }
+  enum rating: { rated: 0, tvma: 1, tv14: 2, pg13: 3, tvpg: 4 }
 
   belongs_to :content_file
+  belongs_to :director, class_name: 'Cast', optional: true
 
   has_many :contents_casts
   has_many :casts, through: :contents_casts

@@ -1,5 +1,15 @@
 require 'csv'
-
+# CsvDatabaseTransactionService
+# Serviço responsável por processar os dados de um arquivo CSV e inseri-los no banco de dados.
+#
+# Este serviço realiza as seguintes operações:
+# 1. Lê os dados do arquivo CSV associado ao `ContentFile`.
+# 2. Cria registros na tabela `contents` e associa gêneros, cast e países relacionados.
+# 3. Gerencia transações para garantir integridade dos dados.
+#
+# @param content_file [ContentFile] O arquivo CSV a ser processado.
+# @return [Hash] Um hash contendo as mensagens de erro e de sucesso.
+#
 class CsvDatabaseTransactionService
   attr_accessor :content_file, :errors, :message
 

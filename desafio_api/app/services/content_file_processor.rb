@@ -1,7 +1,16 @@
 require 'csv'
+require 'csv'
 
-# Service para ler arquivo CSV e inserir dados no Banco de Dados
+# ContentFileProcessor
+# Serviço responsável por processar arquivos CSV e inserir dados no banco de dados.
 #
+# Este serviço realiza as seguintes etapas:
+# 1. Valida o arquivo CSV utilizando `CsvValidadorService`.
+# 2. Cria o registro do arquivo no banco de dados utilizando `ContentFile`.
+# 3. Processa os dados do CSV e insere no banco utilizando `CsvDatabaseTransactionService`.
+#
+# @param content_file_params [Hash] Parâmetros do arquivo CSV a ser processado.
+# @return [Hash] Retorna um hash contendo o status do processamento e possíveis mensagens de erro.
 class ContentFileProcessor
   attr_accessor :content_file
 

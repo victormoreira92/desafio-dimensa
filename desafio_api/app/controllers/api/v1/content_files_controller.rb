@@ -2,6 +2,7 @@ module Api
   module V1
     class ContentFilesController < ApplicationController
 
+      #api/v1/content_files/process_csv
       def process_csv
 
         resp = ContentFileProcessor.new(content_file_params).call

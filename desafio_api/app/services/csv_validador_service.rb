@@ -1,5 +1,16 @@
 require 'csv'
+# CsvValidadorService
+# Serviço para validar arquivos CSV enviados pelo usuário.
+#
+# Realiza as seguintes validações:
+# 1. Verifica se o modelo ContentFile é válido.
+# 2. Verifica se o CSV não está vazio.
+# 3. Verifica se os headers do CSV estão corretos.
 
+#
+# @param params [Hash] Parâmetros do arquivo para validação.
+# @return [Hash] Um hash contendo os erros encontrados.
+# 
 class CsvValidadorService
   COLUNAS_ESPERADAS = %w[show_id type title director	cast
                          country	date_added	release_year

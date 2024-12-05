@@ -11,10 +11,10 @@ FactoryBot.define do
     association :content_file, :com_arquivo_csv
   end
 
-  trait :tv_show do
+  trait :tv do
     type_content { :tv_show }
     duration { (1..12).to_a.sample }
-    type_duration { :season }
+    type_duration { :seasons }
   end
 
   trait :sem_title do

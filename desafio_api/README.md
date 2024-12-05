@@ -56,3 +56,5 @@ Contents_Casts = Representa a relação muitos para muitos de Content e Cast
 `bundle exec rspec -f d /spec/` 
   Para executar específico
  `bundle exec rspec -f d /spec/`
+Realizado testes os seguintes testes:
+Models, Services, Request
